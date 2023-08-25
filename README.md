@@ -1,2 +1,2 @@
-# py-couchbase-api
+# pyxi-couchbase-api
 A basic restful service that acts as a Couchbase proxy.
