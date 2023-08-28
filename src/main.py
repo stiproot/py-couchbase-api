@@ -1,28 +1,23 @@
 from fastapi import FastAPI
-from pyxi_couchbase_client import CouchbaseQryManager, CouchbaseCmdManager, Qry, Cmd
-from reqs import CmdReq, QryReq
-import asyncio
+from fastapi.middleware.cors import CORSMiddleware
+from endpoints import command, query
+
 
 app = FastAPI()
 
+# origins = [
+#     "http://localhost",
+#     "http://localhost:3000",
+#     "http://localhost:8000",
+# ]
 
-@app.get("/couchbase/query")
-async def query(req: QryReq):
-    manager = CouchbaseQryManager()
-    result = manager.query(Qry(req.query, req.params))
-    return {"result": result}
+app.add_middleware(
+    CORSMiddleware,
+    # allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-
-@app.post("/couchbase/command")
-async def command(req: CmdReq):
-    manager = CouchbaseCmdManager(req.bucket_name, req.scope_name, req.collection_name)
-    await manager.command(Cmd(req.key, req.payload))
-    return {"status": "accepted"}
-
-
-if __name__ == "__main__":
-
-    async def main():
-        pass
-
-    asyncio.run(main())
+app.include_router(command.router, prefix="/cb")
+app.include_router(query.router, prefix="/cb")
