@@ -8,19 +8,20 @@ author_email = "stipcich.simon@gmail.com"
 url = "https://github.com/stiproot/py-couchbase-api"
 license = "MIT"
 keywords = ["python", "package", "couchbase", "beta"]
-version = "0.0.1"
+version = "0.0.2"
 install_requires = [
     "environs==9.5.0",
     "fastapi==0.101.1",
-    "pyxi_couchbase_client==0.0.1",
+    "pyxi_couchbase_client==0.0.7",
 ]
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    packages=find_packages("src"),
     name=name,
     version=version,
+    packages=find_packages(where="src"),
+    package_dir={"pyxi_couchbase_api": "src/pyxi_couchbase_api"},
     description=description,
     long_description=long_description,
     long_description_content_type="text/markdown",
