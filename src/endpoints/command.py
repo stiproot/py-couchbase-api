@@ -11,6 +11,7 @@ async def command(req: CmdReq):
     manager = CouchbaseCmdManager(req.bucket_name, req.scope_name, req.collection_name)
 
     data = json.loads(req.payload)
+
     cb_cmd = CbCmd(req.key, data)
 
     await manager.command(cb_cmd)
